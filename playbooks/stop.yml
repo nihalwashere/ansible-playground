@@ -1,0 +1,10 @@
+---
+- name: client
+  hosts: ansible_client
+  remote_user: client
+  become: true
+  tasks:
+    - name: Stop apache web servers
+      service:
+          name: apache2
+          state: stopped

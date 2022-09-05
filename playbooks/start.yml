@@ -1,0 +1,20 @@
+---
+- name: client
+  hosts: ansible_client
+  remote_user: client
+  become: true
+  tasks:
+    - debug: 
+          msg: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+    - name: install apache2
+      apt:
+          name: apache2
+          state: latest
+    - name: run apache2
+      service:
+          name: apache2
+          state: started
+    - name: create webpage
+      copy:
+          content: "Hello World from SJSU client - {{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}."
+          dest: /var/www/html/index.html
